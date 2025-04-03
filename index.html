@@ -1,0 +1,199 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Horas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            padding: 20px;
+            background: linear-gradient(to right, #330033, #220427);
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background-color: rgba(211, 211, 211, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            height: auto;
+        }
+
+        .bloque {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            text-align: center;
+            margin-bottom: 8px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        select,
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 16px;
+            color: #000;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            border-color: #6a82ab;
+            outline: none;
+        }
+
+        input[type="text"][readonly] {
+            background-color: #eee;
+            color: #000;
+            cursor: not-allowed;
+        }
+
+        /* Estilo específico para el campo "Me Despierto" */
+        #meDespierto {
+            background-color: #a8e4a0;
+            /* Un verde claro */
+        }
+
+        h1 {
+            color: #000;
+            margin-bottom: 5px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Horario Feria</h1>
+
+        <div class="bloque">
+            <label for="inicioFeria">Inicio de Feria:</label>
+            <select id="inicioFeria">
+                <option value="08:00">08:00</option>
+                <option value="08:15">08:15</option>
+                <option value="08:30">08:30</option>
+                <option value="08:45">08:45</option>
+                
+                <option value="09:00">09:00</option>
+                <option value="09:15">09:15</option>
+                <option value="09:30">09:30</option>
+                <option value="09:45">09:45</option>
+                
+                <option value="10:00">10:00</option>
+                <option value="10:15">10:15</option>
+                <option value="10:30">10:30</option>
+                <option value="10:45">10:45</option>
+                
+                <option value="11:00">11:00</option>
+                <option value="11:15">11:15</option>
+                <option value="11:30">11:30</option>
+                <option value="11:45">11:45</option>
+                
+                <option value="12:00">12:00</option>
+                <option value="12:15">12:15</option>
+                <option value="12:30">12:30</option>
+                <option value="12:45">12:45</option>
+            </select>
+        </div>
+
+        <div class="bloque">
+            <label for="llegadaColegio">Llegada al Colegio:</label>
+            <input type="text" id="llegadaColegio" readonly>
+        </div>
+
+        <div class="bloque">
+            <label for="salirViarTiempo">T. Trayecto</label>
+            <select id="salirViarTiempo">
+                <option value="15">15 m</option>
+                <option value="30">30 m</option>
+                <option value="45">45 m</option>
+                <option value="60">1 h</option>
+                <option value="75">1 h 15 m</option>
+                <option value="90">1 h 30 m</option>
+                <option value="105">1 h 45 m</option>
+                <option value="120">2 h</option>
+                <option value="135">2 h 15 m</option>
+                <option value="150">2 h 30 m</option>
+                <option value="165">2 h 45 m</option>
+                <option value="180">3 h</option>
+                <option value="195">3 h 15 m</option>
+                <option value="210">3 h 30 m</option>
+                <option value="225">3 h 45 m</option>
+                <option value="240">4 h</option>
+                <option value="255">4 h 15 m</option>
+                <option value="270">4 h 30 m</option>
+                <option value="285">4 h 45 m</option>
+                <option value="300">5 h</option>
+            </select>
+        </div>
+
+        <div class="bloque">
+            <label for="salirViarResultado">Salir de Biar:</label>
+            <input type="text" id="salirViarResultado" readonly>
+        </div>
+
+        <div class="bloque">
+            <label for="meDespierto">Me Despierto:</label>
+            <input type="text" id="meDespierto" readonly>
+        </div>
+    </div>
+
+    <script>
+        function calcularHoras() {
+            let inicioFeria = document.getElementById("inicioFeria").value;
+            let inicioFeriaHora = parseInt(inicioFeria.split(":")[0]);
+            let inicioFeriaMinuto = parseInt(inicioFeria.split(":")[1]);
+
+            let llegadaColegioHora = inicioFeriaHora - 1;
+            let llegadaColegio = (llegadaColegioHora < 10 ? "0" : "") + llegadaColegioHora + ":" + (inicioFeriaMinuto < 10 ? "0" : "") + inicioFeriaMinuto;
+            document.getElementById("llegadaColegio").value = llegadaColegio;
+
+            let salirViarTiempo = parseInt(document.getElementById("salirViarTiempo").value);
+            let llegadaColegioHoraSalir = parseInt(llegadaColegio.split(":")[0]);
+            let llegadaColegioMinutoSalir = parseInt(llegadaColegio.split(":")[1]);
+
+            let salirViarMinutosTotales = llegadaColegioHoraSalir * 60 + llegadaColegioMinutoSalir - salirViarTiempo;
+            let salirViarHora = Math.floor(salirViarMinutosTotales / 60);
+            let salirViarMinuto = salirViarMinutosTotales % 60;
+            let salirViar = (salirViarHora < 10 ? "0" : "") + salirViarHora + ":" + (salirViarMinuto < 10 ? "0" : "") + salirViarMinuto;
+            document.getElementById("salirViarResultado").value = salirViar;
+
+            let salirViarHoraDespierto = parseInt(salirViar.split(":")[0]);
+            let salirViarMinutoDespierto = parseInt(salirViar.split(":")[1]);
+
+            let meDespiertoMinutosTotales = salirViarHoraDespierto * 60 + salirViarMinutoDespierto - 60;
+            let meDespiertoHora = Math.floor(meDespiertoMinutosTotales / 60);
+            let meDespiertoMinuto = meDespiertoMinutosTotales % 60;
+            let meDespierto = (meDespiertoHora < 0 ? 24 + meDespiertoHora : (meDespiertoHora < 10 ? "0" : "") + meDespiertoHora) + ":" + (meDespiertoMinuto < 10 ? "0" : "") + meDespiertoMinuto;
+            document.getElementById("meDespierto").value = meDespierto;
+        }
+
+        document.getElementById("inicioFeria").addEventListener("change", calcularHoras);
+        document.getElementById("salirViarTiempo").addEventListener("change", calcularHoras);
+
+        calcularHoras();
+    </script>
+</body>
+
+</html>
